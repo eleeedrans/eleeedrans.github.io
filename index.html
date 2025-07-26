@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Fechas sin Adelanto de Sueldo</title>
+  https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css
+  <style>
+    body {
+      padding: 2rem;
+    }
+    .fecha-item {
+      background-color: #f8f9fa;
+      border: 1px solid #dee2e6;
+      border-radius: 0.5rem;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      text-align: center;
+      font-weight: 500;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1 class="mb-4 text-center">Fechas sin Adelanto de Sueldo - 2025</h1>
+    <div class="row" id="fechas-container"></div>
+  </div>
+
+  <script>
+    const feriados = [
+      "2025-01-01", "2025-02-24", "2025-03-24", "2025-04-18", "2025-05-01",
+      "(mes, anio) {
+      for (let dia = 1; dia <= 7; dia++) {
+        const fecha = new Date(anio, mes, dia);
+        const diaSemana = fecha.getDay();
+        if (diaSemana !== 0 && diaSemana !== 6 && !esFeriado(fecha)) {
+          return fecha;
+        }
+      }
+      return null;
+    }
+
+    function fechasSinAdelanto(anio) {
+      const fechas = [];
+      for (let mes = 0; mes < 12; mes++) {
+        const fecha = primerDiaHabil(mes, anio);
+        if (fecha) {
+          2 && diaSemana <= 5) {
+            fechas.push({
+              fecha: fecha.toISOString().split('T')[0],
+              mesNombre: meses[mes]
+            });
+          }
+        }
+      }
+      return fechas;
+    }
+
+    function mostrarFechas() {
+      const fechas = fechasSinAdelanto(2025);
+      const container = document.getElementById("fechas-container");
+
+      fechas.forEach(({ fecha, mesNombre }) => {
+        const col = document.createElement("div");
+        col.className = "col-md-4";
+        col.innerHTML = `<div class="fecha-item">${fecha} <br><small>${mesNombre}</small></div>`;
+        container.appendChild(col);
+      });
+    }
+
+    mostrarFechas();
+  </script>
+</body>
+</html>
