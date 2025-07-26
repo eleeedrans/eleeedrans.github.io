@@ -69,10 +69,10 @@ function fechasSinAdelanto(anio) {
       const fechas = fechasSinAdelanto(2025);
       const container = document.getElementById("fechas-container");
 
-      fechas.forEach(({ fecha, mesNombre }) => {
+      fechas.forEach((fecha) => {
         const col = document.createElement("div");
         col.className = "col-md-4";
-        col.innerHTML = `<div class="fecha-item">${fecha} <br><small>${mesNombre}</small></div>`;
+        col.innerHTML = `<div class="fecha-item">${fecha}</div>`;
         container.appendChild(col);
       });
     }
