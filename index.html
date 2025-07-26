@@ -26,35 +26,45 @@
   </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous"></script>
   <script>
-    const feriados = [
-      "2025-01-01", "2025-02-24", "2025-03-24", "2025-04-18", "2025-05-01",
-      "(mes, anio) {
-      for (let dia = 1; dia <= 7; dia++) {
-        const fecha = new Date(anio, mes, dia);
-        const diaSemana = fecha.getDay();
-        if (diaSemana !== 0 && diaSemana !== 6 && !esFeriado(fecha)) {
-          return fecha;
-        }
-      }
-      return null;
-    }
+    
+// Lista de feriados en Argentina (formato YYYY-MM-DD)
+const feriados = [
+  "2025-01-01", "2025-02-24", "2025-03-24", "2025-04-18", "2025-05-01",
+  "2025-05-25", "2025-06-20", "2025-07-09", "2025-08-18", "2025-10-13",
+  "2025-11-24", "2025-12-08", "2025-12-25"
+];
 
-    function fechasSinAdelanto(anio) {
-      const fechas = [];
-      for (let mes = 0; mes < 12; mes++) {
-        const fecha = primerDiaHabil(mes, anio);
-        if (fecha) {
-          2 && diaSemana <= 5) {
-            fechas.push({
-              fecha: fecha.toISOString().split('T')[0],
-              mesNombre: meses[mes]
-            });
-          }
-        }
-      }
-      return fechas;
-    }
+// Función para verificar si una fecha es feriado
+function esFeriado(fecha) {
+  return feriados.includes(fecha.toISOString().split('T')[0]);
+}
 
+// Función para obtener el primer día hábil del mes
+function primerDiaHabil(mes, anio) {
+  for (let dia = 1; dia <= 7; dia++) {
+    const fecha = new Date(anio, mes, dia);
+    const diaSemana = fecha.getDay(); // 0 = domingo, 1 = lunes, ..., 6 = sábado
+    if (diaSemana !== 0 && diaSemana !== 6 && !esFeriado(fecha)) {
+      return fecha;
+    }
+  }
+  return null; // No se encontró día hábil en la primera semana
+}
+
+// Función principal
+function fechasSinAdelanto(anio) {
+  const fechas = [];
+  for (let mes = 0; mes < 12; mes++) {
+    const fecha = primerDiaHabil(mes, anio);
+    if (fecha) {
+      const diaSemana = fecha.getDay();
+      if (diaSemana >= 2 && diaSemana <= 5) { // martes a viernes
+        fechas.push(fecha.toISOString().split('T')[0]);
+      }
+    }
+  }
+  return fechas;
+}
     function mostrarFechas() {
       const fechas = fechasSinAdelanto(2025);
       const container = document.getElementById("fechas-container");
